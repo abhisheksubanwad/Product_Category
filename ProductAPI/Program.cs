@@ -1,11 +1,13 @@
 using ProductAPI.Mapping;
 using ProductAPI.Repositories.IRepositories;
+using ProductAPI.Repositories.IRepositories.Product_Category;
 using ProductAPI.Repositories.SqlRepositories;
+using ProductAPI.Repositories.SqlRepositories.Product_Category;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Register the EmployeeRepository
-builder.Services.AddScoped<IProduceRepositorie, SqlProduceRepositorie>();
+builder.Services.AddScoped<IProductCategory, SqlProductCategory>();
 builder.Services.AddScoped<IImageService, SQLImageService>();
 
 // Register AutoMapper
