@@ -12,5 +12,8 @@ namespace ProductAPI.Model.Domain
         public decimal Price { get; set; }
 
         public DateTime CreatedDate { get; set; } = TimeHelper.GetIndianTime();
+
+        // Navigation Property
+        public Product Product { get; set; }
     }
 }
