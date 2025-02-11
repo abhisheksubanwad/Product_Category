@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ProductAPI.Model.Dto.Product_Category;
 using ProductAPI.Repositories.IRepositories;
-using ProductAPI.Repositories.IRepositories.Product_Category;
 
 namespace ProductAPI.Controllers
 {
@@ -30,5 +29,14 @@ namespace ProductAPI.Controllers
 
             return BadRequest(response);
         }
+
+
+        [HttpGet("Get-all")]
+        public async Task<IActionResult> GetAllProductCategories()
+        {
+            var response = await _productCategory.GetAllProductCategoriesAsync();
+            return response.IsSuccess ? Ok(response) : BadRequest(response);
+        }
+
     }
 }
