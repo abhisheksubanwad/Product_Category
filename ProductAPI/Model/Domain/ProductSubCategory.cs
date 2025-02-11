@@ -12,6 +12,7 @@ namespace ProductAPI.Model.Domain
         public DateTime CreatedDate { get; set; } = TimeHelper.GetIndianTime();
         public DateTime LastUpdatedDate { get; set; } = TimeHelper.GetIndianTime();
 
+        public List<Product> Products { get; set; } = new List<Product>();
         public ProductCategory Category { get; set; }
         public Language Language { get; set; }
     }
