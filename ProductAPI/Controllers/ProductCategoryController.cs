@@ -35,7 +35,10 @@ namespace ProductAPI.Controllers
         public async Task<IActionResult> GetAllProductCategories()
         {
             var response = await _productCategory.GetAllProductCategoriesAsync();
-            return response.IsSuccess ? Ok(response) : BadRequest(response);
+            if (response.IsSuccess)
+                return Ok(response);
+
+            return BadRequest(response);
         }
 
     }

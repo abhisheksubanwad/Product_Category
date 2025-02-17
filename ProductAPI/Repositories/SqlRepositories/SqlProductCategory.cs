@@ -77,31 +77,41 @@ namespace ProductAPI.Repositories.SqlRepositories
                 using (var command = new MySqlCommand("GetAllProductCategories", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    await connection.OpenAsync();
 
+                    await connection.OpenAsync();
                     using (var reader = await command.ExecuteReaderAsync())
                     {
                         while (await reader.ReadAsync())
                         {
                             productCategories.Add(new ProductCategory
                             {
-                                ProductCategoryId = reader.GetGuid("ProductCategoryId"),
-                                Title = reader.GetString("Title"),
-                                Description = reader.GetString("Description"),
-                                ImageUrl = reader.GetString("ImageUrl"),
-                                Language = (Language)reader.GetInt32("Language"),
-                                CreatedDate = reader.GetDateTime("CreatedDate"),
-                                LastUpdatedDate = reader.GetDateTime("LastUpdatedDate")
+                                ProductCategoryId = Guid.Parse(reader["ProductCategoryId"].ToString()),
+                                Title = reader["Title"].ToString(),
+                                Description = reader["Description"].ToString(),
+                                ImageUrl = reader["ImageUrl"]?.ToString(),
+                                Language = Enum.Parse<Language>(reader["LanguageName"].ToString()),
+                                CreatedDate = Convert.ToDateTime(reader["CreatedDate"]),
+                                LastUpdatedDate = Convert.ToDateTime(reader["LastUpdatedDate"])
                             });
                         }
                     }
                 }
 
-                return new ResponseDto { Result = productCategories, IsSuccess = true, Message = "Product categories retrieved successfully." };
+                return new ResponseDto
+                {
+                    Result = productCategories,
+                    IsSuccess = true,
+                    Message = "Product Categories Retrieved Successfully"
+                };
             }
             catch (Exception ex)
             {
-                return new ResponseDto { IsSuccess = false, Message = ex.Message };
+                return new ResponseDto
+                {
+                    Result = null,
+                    IsSuccess = false,
+                    Message = $"Error: {ex.Message}"
+                };
             }
         }
 
